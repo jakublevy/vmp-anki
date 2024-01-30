@@ -86,13 +86,11 @@ def create_anki_pkg(questions: [Question]):
             {'name': 'question_num'},
             {'name': 'a'},
             {'name': 'a_img'},
-            {'name': 'a_correct'},
             {'name': 'b'},
             {'name': 'b_img'},
-            {'name': 'b_correct'},
             {'name': 'c'},
             {'name': 'c_img'},
-            {'name': 'c_correct'}
+            {'name': 'correct'}
         ],
         templates=[{
             'name': 'Card 1',

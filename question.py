@@ -1,4 +1,6 @@
 import base64
+import itertools
+import random
 from enum import Enum
 import requests
 
@@ -21,12 +23,9 @@ class Answer:
 
     def ankiformat(self) -> [str]:
         img = ''
-        anki_correct = 'wrong'
         if self.img_uri is not None:
             img = img_uri_embed(self.img_uri)
-        if self.correct:
-            anki_correct = 'correct'
-        return [self.txt, img, anki_correct]
+        return [self.txt, img]
 
 
 class Question:
@@ -46,6 +45,17 @@ class Question:
         self.question_set = question_set
         self.question_num = question_num
 
+    def random_shuffle_answers(self):
+        answers = [self.ans_a, self.ans_b, self.ans_c]
+        random.shuffle(answers)
+        self.ans_a = answers[0]
+        self.ans_b = answers[1]
+        self.ans_c = answers[2]
+
+    @property
+    def answers(self):
+        return [self.ans_a, self.ans_b, self.ans_c]
+
     def ankinum(self) -> str:
         return f'{self.question_set.name}{self.question_num}'
 
@@ -54,7 +64,15 @@ class Question:
         if self.question_uri is not None:
             img = img_uri_embed(self.question_uri)
 
-        return [self.question_txt, img, self.ankinum()] + self.ans_a.ankiformat() + self.ans_b.ankiformat() + self.ans_c.ankiformat()
+        self.random_shuffle_answers()
+        ans: [[str]] = [self.ans_a.ankiformat(), self.ans_b.ankiformat(), self.ans_c.ankiformat()]
+        correct_idx: int = 0
+        for i in range(len(self.answers)):
+            if self.answers[i].is_correct:
+                correct_idx = i
+                break
+
+        return [self.question_txt, img, self.ankinum()] + list(itertools.chain(*ans)) + [str(correct_idx)]
 
     def ankitag(self) -> str:
         return str(self.question_set.name)
