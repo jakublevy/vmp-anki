@@ -25,32 +25,32 @@ front_template = """
         return Math.floor(Math.random() * (max - min) ) + min;
     }
 
-    const answers = [...document.getElementsByClassName('native')]
-    let images = [...document.getElementsByClassName('img')]
-    const parent = images[images.length - 1].parentNode
+    var answers = [...document.getElementsByClassName('native')]
+    var images = [...document.getElementsByClassName('img')]
+    var parent = images[images.length - 1].parentNode
     images = images.slice(1)
-    const correctIdx = parseInt(document.getElementById('correct').textContent)
+    var correctIdx = parseInt(document.getElementById('correct').textContent)
 
     answers.forEach(x=>x.remove())
     images.forEach(x=>x.remove())
 
-    const order = [0,1,2]
-    let neworder = []
-    for(let i = 0; i < 3; ++i) {
-        const pos = getRndInteger(0, 3-i)
+    var order = [0,1,2]
+    var neworder = []
+    for(var i = 0; i < 3; ++i) {
+        var pos = getRndInteger(0, 3-i)
         neworder.push(order[pos])
         order.splice(pos, 1)
     }
     
-    let arr = []
-    let correct = false
-    for(let i = 0; i < answers.length; ++i) {
+    var arr = []
+    var correct = false
+    for(var i = 0; i < answers.length; ++i) {
         if(i == correctIdx)
             correct = true
         else
             correct = false
         
-        const new_idx = neworder[i]
+        var new_idx = neworder[i]
         arr.splice(new_idx, 0, [answers[i], images[i], correct])
     }
 
@@ -58,9 +58,9 @@ front_template = """
     localStorage.setItem('_correct_idx', JSON.stringify(correctIdx))
 
 
-    let charCode = 97;
-    for(let i = 0; i < arr.length; ++i) {
-        let element = arr[i][0]
+    var charCode = 97;
+    for(var i = 0; i < arr.length; ++i) {
+        var element = arr[i][0]
         element.textContent = element.textContent.replace(element.textContent[0], String.fromCharCode(charCode))
         parent.appendChild(element)
         parent.appendChild(arr[i][1])
@@ -91,28 +91,28 @@ back_template = """
         <figure class="back-i img">{{c_img}}</figure>
     </div>	
     <script>
-    const neworderr = JSON.parse(localStorage.getItem('_my_order'))
-    const correctIdxAfterShufflee = JSON.parse(localStorage.getItem('_correct_idx'))
-    const answerss = [...document.getElementsByClassName('back-t')]
-    let imagess = [...document.getElementsByClassName('back-i')]
-    const parentt = document.getElementById('wrapper-w');
+    var neworderr = JSON.parse(localStorage.getItem('_my_order'))
+    var correctIdxAfterShufflee = JSON.parse(localStorage.getItem('_correct_idx'))
+    var answerss = [...document.getElementsByClassName('back-t')]
+    var imagess = [...document.getElementsByClassName('back-i')]
+    var parentt = document.getElementById('wrapper-w');
     imagess = imagess.slice(1)
     answerss.forEach(x=>x.remove())
     imagess.forEach(x=>x.remove())
-    let arrr = [];
-    let correctt = false;
-    for(let i = 0; i < answerss.length; ++i) {
+    var arrr = [];
+    var correctt = false;
+    for(var i = 0; i < answerss.length; ++i) {
         if(i == correctIdxAfterShufflee)
             correctt = true
         else
             correctt = false
         
-        const new_idxx = neworderr[i]
+        var new_idxx = neworderr[i]
         arrr.splice(new_idxx, 0, [answerss[i], imagess[i], correctt])
     }
-    let charCodee = 97;
-    for(let i = 0; i < arrr.length; ++i) {
-        let elementt = arrr[i][0]
+    var charCodee = 97;
+    for(var i = 0; i < arrr.length; ++i) {
+        var elementt = arrr[i][0]
         elementt.textContent = elementt.textContent.replace(elementt.textContent[0], String.fromCharCode(charCodee))
         if(!arrr[i][2]) {
             elementt.style.visibility = 'hidden'
