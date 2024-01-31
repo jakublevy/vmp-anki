@@ -223,8 +223,9 @@ styling = """
 
      .questionNumber {    
          position: absolute;
-         right: 40px;
-         top: 40px;
+         right: 35px;
+         top: 15px;
+         font-size: 70%;
        }
 
      @media all and (max-height: 400px) {
